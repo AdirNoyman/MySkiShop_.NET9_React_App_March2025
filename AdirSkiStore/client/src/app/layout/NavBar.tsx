@@ -11,8 +11,9 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import AdbIcon from '@mui/icons-material/Adb';
 import SwitchDarkModeButton from './SwitchDarkModeButton';
-import { ListItem } from '@mui/material';
+import { Badge, ListItem } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import { ShoppingCart } from '@mui/icons-material';
 
 const pages = [
   { pageName: 'Products', path: '/catalog' },
@@ -55,7 +56,8 @@ const NavBar = ({ changeTheme, isDarkMode }: NavBarProps) => {
   return (
     <AppBar position="fixed">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box sx={{flexGrow: 0, display: 'flex', alignItems: 'center'}}>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -74,7 +76,7 @@ const NavBar = ({ changeTheme, isDarkMode }: NavBarProps) => {
           >
             SkiStore
           </Typography>
-
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -109,7 +111,7 @@ const NavBar = ({ changeTheme, isDarkMode }: NavBarProps) => {
                   onClick={handleCloseNavMenu}
                   to={page.path}
                 >
-                  <Typography sx={{ textAlign: 'center' }}>
+                  <Typography sx={{ textAlign: 'center',color: '#4096ec', '&:hover': {color: '#000000'}, '&:active': {color: '#000000'} }}>
                     {page.pageName}
                   </Typography>
                 </ListItem>
@@ -135,27 +137,35 @@ const NavBar = ({ changeTheme, isDarkMode }: NavBarProps) => {
           >
             SkiStore
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{  display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <ListItem
                 component={NavLink}
                 to={page.path}
                 key={page.pageName}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ textAlign: 'center',color: '#f0f2f5', '&:hover': {color: '#ee8f13'}, '&:active': {color: '#ee8f13'} }}
               >
                 {page.pageName}
               </ListItem>
             ))}
           </Box>
+          <Box sx={{flexGrow: 0, display: 'flex', alignItems: 'center'}}>
+          {/*  CART ICON   */}
+          <IconButton size="large" sx={{ mr: 1 }} color="inherit">
+            <Badge badgeContent="4" color="secondary">
+              <ShoppingCart />
+            </Badge>
+          </IconButton>
           <SwitchDarkModeButton
             checked={isDarkMode}
             onClick={() => changeTheme()}
           />
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Adir" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
 
@@ -188,6 +198,7 @@ const NavBar = ({ changeTheme, isDarkMode }: NavBarProps) => {
                 </ListItem>
               ))}
             </Menu>
+          </Box>
           </Box>
         </Toolbar>
       </Container>
