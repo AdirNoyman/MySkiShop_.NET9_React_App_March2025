@@ -68,7 +68,7 @@ const NavBar = ({ changeTheme, isDarkMode }: NavBarProps) => {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'white',
               textDecoration: 'none',
             }}
           >
@@ -129,7 +129,7 @@ const NavBar = ({ changeTheme, isDarkMode }: NavBarProps) => {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'white',
               textDecoration: 'none',
             }}
           >
