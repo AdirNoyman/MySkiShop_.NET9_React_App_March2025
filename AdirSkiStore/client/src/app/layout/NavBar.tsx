@@ -8,23 +8,34 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import SwitchDarkModeButton from './SwitchDarkModeButton';
+import { ListItem } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [
+  { pageName: 'Products', path: '/catalog' },
+  { pageName: 'About', path: '/about' },
+  { pageName: 'Contact', path: '/contact' },
+];
+const authPages = [
+  { pageName: 'Login', path: '/login' },
+  { pageName: 'Register', path: '/register' },
+];
 
 type NavBarProps = {
   changeTheme: () => void;
   isDarkMode: boolean;
 };
 
-const NavBar = ({changeTheme, isDarkMode} : NavBarProps) => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+const NavBar = ({ changeTheme, isDarkMode }: NavBarProps) => {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -50,7 +61,7 @@ const NavBar = ({changeTheme, isDarkMode} : NavBarProps) => {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -92,9 +103,16 @@ const NavBar = ({changeTheme, isDarkMode} : NavBarProps) => {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-                </MenuItem>
+                <ListItem
+                  component={NavLink}
+                  key={page.pageName}
+                  onClick={handleCloseNavMenu}
+                  to={page.path}
+                >
+                  <Typography sx={{ textAlign: 'center' }}>
+                    {page.pageName}
+                  </Typography>
+                </ListItem>
               ))}
             </Menu>
           </Box>
@@ -103,7 +121,7 @@ const NavBar = ({changeTheme, isDarkMode} : NavBarProps) => {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -115,27 +133,32 @@ const NavBar = ({changeTheme, isDarkMode} : NavBarProps) => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            SkiStore
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
+              <ListItem
+                component={NavLink}
+                to={page.path}
+                key={page.pageName}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
-              </Button>
+                {page.pageName}
+              </ListItem>
             ))}
           </Box>
-          <SwitchDarkModeButton checked={isDarkMode} onClick={() => changeTheme()}/>
+          <SwitchDarkModeButton
+            checked={isDarkMode}
+            onClick={() => changeTheme()}
+          />
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
-            
+
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -152,18 +175,23 @@ const NavBar = ({changeTheme, isDarkMode} : NavBarProps) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                </MenuItem>
+              {authPages.map((authPage) => (
+                <ListItem
+                  component={NavLink}
+                  key={authPage.pageName}
+                  onClick={handleCloseUserMenu}
+                  to={authPage.path}
+                >
+                  <Typography sx={{ textAlign: 'center' }}>
+                    {authPage.pageName}
+                  </Typography>
+                </ListItem>
               ))}
             </Menu>
           </Box>
-          
         </Toolbar>
-        
       </Container>
     </AppBar>
   );
-}
+};
 export default NavBar;
